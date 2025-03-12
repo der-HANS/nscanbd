@@ -5,8 +5,8 @@ Web Services Dynamic Discovery (WS-Discovery)
 
 
 
-[WS-Discovery (MS)] (http://specs.xmlsoap.org/ws/2005/04/discovery/ws-discovery.pdf)\
-          [(OASIS)] (https://docs.oasis-open.org/ws-dd/ns/discovery/2009/01)
+[WS-Discovery \(MS\)] (http://specs.xmlsoap.org/ws/2005/04/discovery/ws-discovery.pdf)
+          [\(OASIS\)] (https://docs.oasis-open.org/ws-dd/ns/discovery/2009/01)
 
 [WS-Transfer](https://www.w3.org/Submission/WS-Transfer)\
 [PNP-X](http://download.microsoft.com/download/a/f/7/af7777e5-7dcd-4800-8a0a-b18336565f5b/PnPX-spec.doc)
