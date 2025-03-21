@@ -53,11 +53,64 @@ require "socket"
 require "ipaddr"
 # require "etc"
 
+
+
+wsd_message = <<~EOS
+    <soap:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsd="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsdp="http://schemas.xmlsoap.org/ws/2006/02/devprof">
+      <soap:Header>
+        <wsa:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe</wsa:Action>
+        <wsa:MessageID>urn:uuid:4497f415-0d92-abce-41cd-cdddc8957990</wsa:MessageID>
+        <wsa:To>urn:schemas-xmlsoap-org:ws:2005:04:discovery</wsa:To>
+      </soap:Header>
+      <soap:Body>
+        <wsd:Probe>
+          <wsd:Types>wsdp:Device</wsd:Types>
+        </wsd:Probe>
+      </soap:Body>
+    </soap:Envelope>
+  EOS
+
+p wsd_message
+
+# u2 = UDPSocket.new
+# # u2.connect("10.4.30.178", 3702)
+# u2.connect("239.255.255.250", 3702)
+# # u2.connect("239.255.255.253", 3702)
+# # u2.send "uuuu", 0
+# u2.send wsd_message, 0
+
+# # u2.connect_address.ip_address
+# LISTEN_PORT = u2.connect_address.ip_port
+
+
+
+u1 = UDPSocket.new
+u1.bind("10.4.30.178", 4913)
+u1.send wsd_message, 0, "239.255.255.250", 3702
+# u1.send wsd_message, 0, "239.255.255.253", 3702
+# u1.send wsd_message, 0, "10.4.30.250", 3702
+# p u1.recvfrom(10) #=> ["message-to", ["AF_INET", 4913, "localhost", "127.0.0.1"]]
+
+while true do
+  data = u1.recvfrom(2000)
+  puts "--------------------------------------------------------------------------------------"
+  puts data[1]
+  puts
+  puts data[0]
+end
+
+
+exit
+
+# ================================================================================================
+
+
 LISTEN_ADDR = "10.4.30.178"
 # LISTEN_ADDR = "127.0.0.1"
 LISTEN_PORT = 3702
 MSG_LENGTH  = 1400
 FLAGS       = 0
+
 
 pipe = Ractor.new do
   loop do
